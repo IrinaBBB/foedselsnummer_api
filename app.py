@@ -46,7 +46,7 @@ def welcome():
 
 @app.route("/validate", methods=['POST'])
 def validate_fnr():
-    return process_request(functions.calculate_age)
+    return process_request(functions.validate_fnr_json)
 
 
 @app.route("/get_age", methods=['POST'])

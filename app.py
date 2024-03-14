@@ -3,6 +3,8 @@ import functions
 
 app = Flask(__name__)
 
+fnr_list = functions.read_file()
+
 
 @app.route("/")
 def welcome():
@@ -44,9 +46,24 @@ def welcome():
     """
 
 
+@app.route("/counts_gender_group", methods=['GET'])
+def get_counts_gender_group():
+    return functions.get_counts_by_gender_age()
+
+
+@app.route("/counts", methods=['GET'])
+def get_counts():
+    return functions.get_counts(fnr_list)
+
+
 @app.route("/validate", methods=['POST'])
 def validate_fnr():
     return process_request(functions.validate_fnr_json)
+
+
+@app.route("/search", methods=['POST'])
+def search_fnr():
+    return process_request(functions.check_if_fnr_in_dataset)
 
 
 @app.route("/get_age", methods=['POST'])
@@ -56,7 +73,7 @@ def get_age():
 
 @app.route("/get_gender", methods=['POST'])
 def get_gender():
-    return process_request(functions.define_gender)
+    return process_request(functions.define_gender_json)
 
 
 def process_request(process_function):
